@@ -2,3 +2,8 @@
 /replays/
 #/data/
 /programs
+/__pycache__/
+/.ipynb_checkpoints/
+*.exe
+*.json
+rrrocket
