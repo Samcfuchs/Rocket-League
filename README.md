@@ -9,11 +9,13 @@ I use rrrocket. That seems to generate slightly more usable files. I can parse
 replays with this command:
 
     ./rrrocket -nm ./replays
-    mv ./replays/*.json data
+    mv **/*.json data
 
 ## Parse rrrocket files to motion data
-I can do this with ./parser.py to get the data for any single rrrocket output
-file. I'm working on pipelining this to gather multiple replays at once.
+I can do this with ./replayparser.py to get the data for any single rrrocket output
+file. I'm working on pipelining this to gather multiple replays at once. I now
+have megaparser.py which parses all of the json files in the toplevel of a
+directory and compiles them into a single output json file.
 
 ## Understanding motion data
 
@@ -42,3 +44,6 @@ point that just doesn't end with a winner, and we assign them the class 0.5. But
 we also see some of these points which are assigned a winning team. That seems
 very wrong. If the ball doesn't end in the goal, how can a team have scored?
 
+I think I've gotten to the point where I just need a better dataset. These are
+replays from many different modes, versions of the game, etc. so the projectp
+will probably develop better on a better dataset, i.e. pro replays.

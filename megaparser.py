@@ -1,17 +1,20 @@
 from matplotlib import pyplot as plt
 import pandas as pd
 import sys
-import parser
+import replayparser as parser
 import json
 import os
 from tqdm import tqdm
 
 if __name__ == "__main__":
-    #input_folder = sys.argv[1]
-    #output_folder = sys.argv[2]
-    input_folder = "data/my"
+    if len(sys.argv) == 1:
+        input_folder = "data/RLCS21"
+        output_file = "parsed/pros.json"
+    else:
+        input_folder = sys.argv[1]
+        output_folder = sys.argv[2]
 
-    is_replay = lambda n: 'replay' in n
+    is_replay = lambda n: 'replay' in n.split('.')
     filenames = list(filter(is_replay, os.listdir(input_folder)))
     allballs = []
 
@@ -19,7 +22,7 @@ if __name__ == "__main__":
         with open(f"{input_folder}/{fname}", 'r') as f:
             j = json.load(f)
             data = j
-            frames = j['network_frames']['frames']
+            frames = data['network_frames']['frames']
         
         #print(data['game_type'])
         
@@ -35,12 +38,13 @@ if __name__ == "__main__":
             plt.show()
 
 
-        id = fname.split('.')[0]
+        id = data['properties']['Id']
+
         for rec in balls:
             rec['id'] = id
         allballs += balls    
 
     print(len(allballs))
 
-    pd.DataFrame(allballs).to_json("parsed/my_replays.json")
+    pd.DataFrame(allballs).to_json(output_file)
     
